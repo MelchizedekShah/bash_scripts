@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+installpackage() {
+    local pkgs="$@"
+    while true; do
+        if ! sudo pacman -Sy --noconfirm --needed $pkgs; then
+            echo "ERROR: Failed to install: $pkgs"
+            echo "Retrying..."
+        else
+            echo "SUCCESS: Installed $pkgs"
+            break
+        fi
+    done
+}
+
+echo "Installing packages..."
+installpackage kitty-terminfo fastfetch starship vim glibc
+echo "Package installation complete!"
+
+echo "Locale setup..."
+if ! grep -q "^en_US.UTF-8 UTF-8" /etc/locale.gen; then
+    sudo sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+fi
+sudo locale-gen
+echo "LANG=en_US.UTF-8" | sudo tee /etc/locale.conf >/dev/null
+echo "Locale setup complete!"
