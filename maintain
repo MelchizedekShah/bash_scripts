@@ -16,7 +16,7 @@ systemctl --failed || true
 echo "=== Removing unused Flatpaks ==="
 flatpak uninstall --unused -y
 
-echo "=== Cleaning package caches (paru & pacman) ==="
+echo "=== Cleaning package caches (yay & pacman) ==="
 yay -Scc --noconfirm
 sudo pacman -Scc --noconfirm
 
