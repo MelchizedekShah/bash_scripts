@@ -16,7 +16,7 @@ installpackage() {
 }
 
 echo "Installing packages..."
-installpackage kitty-terminfo fastfetch starship vim glibc
+installpackage fastfetch starship vim
 echo "Package installation complete!"
 
 echo "Locale setup..."
