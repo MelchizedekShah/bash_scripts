@@ -7,6 +7,18 @@
 # Exit if any command fails
 set -e
 
+echo "=== Updating native packages ==="
+
+while true; do
+    if ! yay --noconfirm; then
+        echo "ERROR: yay update failed"
+        echo "Retrying..."
+    else
+        echo "SUCCESS: yay update completed"
+        break
+    fi
+done
+
 echo "=== Updating the system ==="
 flatpak update -y
 
@@ -34,18 +46,6 @@ sudo journalctl --vacuum-time=2weeks
 
 echo "=== Updating mirror list with reflector ==="
 sudo reflector --verbose --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-
-echo "=== Updating native packages ==="
-
-while true; do
-    if ! yay --noconfirm; then
-        echo "ERROR: yay update failed"
-        echo "Retrying..."
-    else
-        echo "SUCCESS: yay update completed"
-        break
-    fi
-done
 
 echo "=== System maintenance complete! ==="
 
