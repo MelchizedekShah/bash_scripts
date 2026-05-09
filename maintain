@@ -22,6 +22,12 @@ done
 echo "=== Updating the system ==="
 flatpak update -y
 
+echo "=== Updating firmware ==="
+fwupdmgr get-devices
+fwupdmgr refresh
+fwupdmgr get-updates
+fwupdmgr update
+
 echo "=== Checking failed systemd services ==="
 systemctl --failed || true
 
