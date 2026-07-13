@@ -3,16 +3,16 @@
 set -e
 
 installpackage() {
-    local pkgs="$@"
-    while true; do
-        if ! sudo pacman -Sy --noconfirm --needed $pkgs; then
-            echo "ERROR: Failed to install: $pkgs"
-            echo "Retrying..."
-        else
-            echo "SUCCESS: Installed $pkgs"
-            break
-        fi
-    done
+  local pkgs="$@"
+  while true; do
+    if ! sudo pacman -Sy --noconfirm --needed $pkgs; then
+      echo "ERROR: Failed to install: $pkgs"
+      echo "Retrying..."
+    else
+      echo "SUCCESS: Installed $pkgs"
+      break
+    fi
+  done
 }
 
 echo "Installing packages..."
