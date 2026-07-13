@@ -16,12 +16,23 @@ installpackage() {
 }
 
 echo "Installing packages..."
-installpackage fastfetch starship vim
+installpackage fastfetch starship neovim fd fzf ghostty-terminfo \
+  git ripgrep tree-sitter-cli ttf-jetbrains-mono-nerd lazygit curl \
+  wl-clipboard
 echo "Package installation complete!"
+
+echo "Neovim setup"
+if [ ! -d ~/.config/nvim ]; then
+  echo "Installing LazyVim starter..."
+  git clone https://github.com/LazyVim/starter ~/.config/nvim
+  rm -rf ~/.config/nvim/.git
+else
+  echo "Neovim config already exists, skipping."
+fi
 
 echo "Locale setup..."
 if ! grep -q "^en_US.UTF-8 UTF-8" /etc/locale.gen; then
-    sudo sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+  sudo sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 fi
 sudo locale-gen
 echo "LANG=en_US.UTF-8" | sudo tee /etc/locale.conf >/dev/null
