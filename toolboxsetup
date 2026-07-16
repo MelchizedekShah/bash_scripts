@@ -4,6 +4,7 @@ set -e
 
 installpackage() {
   local pkgs="$@"
+
   while true; do
     if ! sudo pacman -Sy --noconfirm --needed $pkgs; then
       echo "ERROR: Failed to install: $pkgs"
@@ -16,24 +17,50 @@ installpackage() {
 }
 
 echo "Installing packages..."
-installpackage fastfetch starship neovim fd fzf ghostty-terminfo \
-  git ripgrep tree-sitter-cli ttf-jetbrains-mono-nerd lazygit curl \
-  wl-clipboard
+
+installpackage \
+  fastfetch \
+  starship \
+  neovim \
+  git \
+  curl \
+  fd \
+  fzf \
+  ripgrep \
+  tree \
+  tree-sitter-cli \
+  ghostty-terminfo \
+  lazygit \
+  wl-clipboard \
+  ttf-jetbrains-mono-nerd \
+  base-devel \
+  python \
+  gdu \
+  bottom
+
 echo "Package installation complete!"
 
-echo "Neovim setup"
+echo "Setting up AstroNvim..."
+
 if [ ! -d ~/.config/nvim ]; then
-  echo "Installing LazyVim starter..."
-  git clone https://github.com/LazyVim/starter ~/.config/nvim
+  echo "Installing AstroNvim template..."
+
+  git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
   rm -rf ~/.config/nvim/.git
+
 else
   echo "Neovim config already exists, skipping."
 fi
 
 echo "Locale setup..."
+
 if ! grep -q "^en_US.UTF-8 UTF-8" /etc/locale.gen; then
   sudo sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 fi
+
 sudo locale-gen
+
 echo "LANG=en_US.UTF-8" | sudo tee /etc/locale.conf >/dev/null
+
 echo "Locale setup complete!"
+
