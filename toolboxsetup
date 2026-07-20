@@ -36,7 +36,8 @@ installpackage \
   base-devel \
   python \
   gdu \
-  bottom
+  bottom \
+  viu
 
 echo "Package installation complete!"
 
