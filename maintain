@@ -45,7 +45,9 @@ echo "=== Cleaning old journal logs ==="
 sudo journalctl --vacuum-time=2weeks
 
 echo "=== Updating mirror list with reflector ==="
-sudo reflector --verbose --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+#sudo reflector --verbose --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+sudo reflector --verbose --country NL --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+#sudo reflector --verbose --country NL,DE,BE --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 echo "=== System maintenance complete! ==="
 
