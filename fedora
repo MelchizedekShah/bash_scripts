@@ -1,0 +1,52 @@
+#!/bin/bash
+set -e
+
+installpackage() {
+    local pkgs=("$@")
+
+    while true; do
+        if sudo dnf install -y "${pkgs[@]}"; then
+            echo "SUCCESS: Installed ${pkgs[*]}"
+            break
+        else
+            echo "ERROR: Failed to install: ${pkgs[*]}"
+            echo "Retrying..."
+            sleep 2
+        fi
+    done
+}
+
+echo "Installing packages..."
+
+installpackage \
+    fastfetch \
+    neovim \
+    git \
+    curl \
+    fd-find \
+    fzf \
+    ripgrep \
+    tree \
+    tree-sitter-cli \
+    lazygit \
+    wl-clipboard \
+    gcc \
+    gcc-c++ \
+    make \
+    python3 \
+    gdu \
+    btop
+
+echo "Package installation complete!"
+
+echo "Setting up AstroNvim..."
+
+if [ ! -d ~/.config/nvim ]; then
+    echo "Installing AstroNvim template..."
+    git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
+    rm -rf ~/.config/nvim/.git
+else
+    echo "Neovim config already exists, skipping."
+fi
+
+echo "Setup complete!"
